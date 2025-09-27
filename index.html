@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TT DOWNLOADER</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 40px;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header .icon {
+            font-size: 3rem;
+            color: #a855f7;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .download-form {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #374151;
+            font-weight: 600;
+        }
+
+        .url-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .url-input:focus {
+            outline: none;
+            border-color: #a855f7;
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+        }
+
+        .download-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #a855f7, #7c3aed);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .download-btn:hover {
+            background: linear-gradient(135deg, #9333ea, #6b21a8);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.3);
+        }
+
+        .result-container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: none;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-item {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 4px solid #a855f7;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            color: #111827;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .video-preview {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .video-thumbnail {
+            max-width: 200px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .final-download-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .final-download-btn:hover {
+            background: linear-gradient(135deg, #059669, #047857);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .footer {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .footer p {
+            color: white;
+            margin: 0;
+            font-size: 16px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .footer .creator-name {
+            font-weight: bold;
+            color: #a855f7;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+                max-width: 100%;
+            }
+
+            .header {
+                padding-top: 20px;
+                margin-bottom: 30px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header .icon {
+                font-size: 2.5rem;
+            }
+
+            .download-form, .result-container {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .stat-item {
+                padding: 12px;
+            }
+
+            .video-thumbnail {
+                max-width: 150px;
+            }
+
+            .url-input, .download-btn, .final-download-btn {
+                padding: 12px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .header .icon {
+                font-size: 2rem;
+            }
+
+            .download-form, .result-container {
+                padding: 15px;
+                border-radius: 15px;
+            }
+
+            .video-thumbnail {
+                max-width: 120px;
+            }
+
+            .footer {
+                padding: 15px;
+                margin-top: 30px;
+            }
+
+            .footer p {
+                font-size: 14px;
+            }
+        }
+
+        /* Desktop optimizations */
+        @media (min-width: 1024px) {
+            .container {
+                max-width: 700px;
+            }
+
+            .header {
+                padding-top: 60px;
+                margin-bottom: 50px;
+            }
+
+            .header h1 {
+                font-size: 3rem;
+            }
+
+            .header .icon {
+                font-size: 3.5rem;
+            }
+
+            .download-form, .result-container {
+                padding: 40px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .video-thumbnail {
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <div class="icon">
+                    <i class="fas fa-video"></i>
+                </div>
+                <h1>TT DOWNLOADER</h1>
+            </div>
+
+            <div class="download-form">
+                <div class="input-group">
+                    <label for="urlInput">
+                        <i class="fas fa-link"></i> Masukkan URL TikTok
+                    </label>
+                    <input 
+                        type="url" 
+                        id="urlInput" 
+                        class="url-input" 
+                        placeholder="https://www.tiktok.com/@username/video/..."
+                    >
+                </div>
+
+                <button class="download-btn" onclick="processDownload()">
+                    <i class="fas fa-download"></i>
+                    Proses Download
+                </button>
+            </div>
+
+            <div class="result-container" id="resultContainer">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-label"><i class="fas fa-heart"></i> Like:</div>
+                        <div class="stat-value" id="likeCount">-</div>
+                    </div>
+
+                    <div class="stat-item">
+                        <div class="stat-label"><i class="fas fa-comment"></i> Comment:</div>
+                        <div class="stat-value" id="commentCount">-</div>
+                    </div>
+
+                    <div class="stat-item">
+                        <div class="stat-label"><i class="fas fa-share"></i> Share:</div>
+                        <div class="stat-value" id="shareCount">-</div>
+                    </div>
+
+                    <div class="stat-item">
+                        <div class="stat-label"><i class="fas fa-hashtag"></i> Hashtag:</div>
+                        <div class="stat-value" id="hashtags">-</div>
+                    </div>
+                </div>
+
+                <div class="video-preview"></div>
+
+                <button class="final-download-btn" id="downloadBtn">
+                    <i class="fas fa-download"></i>
+                    Download Video
+                </button>
+            </div>
+
+            <div class="footer">
+                <p>Di buat oleh <span class="creator-name">Hamzah Wisnu Dzaky</span></p>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        async function processDownload() {
+            const urlInput = document.getElementById('urlInput').value.trim();
+            const resultContainer = document.getElementById('resultContainer');
+            const downloadBtn = document.querySelector('.download-btn');
+
+            if (!urlInput) {
+                alert('URL yang anda masukkan tidak valid.');
+                return;
+            }
+
+            const apiUrl = "https://api.siputzx.my.id/api/d/tiktok/v2?url=" + encodeURIComponent(urlInput);
+            const originalText = downloadBtn.innerHTML;
+            downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+            downloadBtn.disabled = true;
+
+            try {
+                const res = await fetch(apiUrl);
+                const json = await res.json();
+
+                if (!json.status) throw new Error("Gagal ambil data");
+
+                const data = json.data;
+
+                // isi statistik
+                document.getElementById("likeCount").innerText = data.metadata.stats.likeCount;
+                document.getElementById("commentCount").innerText = data.metadata.stats.commentCount;
+                document.getElementById("shareCount").innerText = data.metadata.stats.shareCount;
+                document.getElementById("hashtags").innerText = "#" + data.metadata.hashtags.join(" #");
+
+                // preview video
+                const previewDiv = document.querySelector('.video-preview');
+                previewDiv.innerHTML = `
+                    <video controls class="video-thumbnail">
+                        <source src="${data.download.video[0]}" type="video/mp4">
+                    </video>
+                `;
+
+                // tombol download
+                const finalBtn = document.getElementById('downloadBtn');
+                finalBtn.onclick = () => {
+                    window.open(data.download.video[0], '_blank');
+                };
+
+                resultContainer.style.display = "block";
+                resultContainer.scrollIntoView({ behavior: 'smooth' });
+            } catch (err) {
+                alert("Terjadi error saat mengambil data.");
+                console.error(err);
+            } finally {
+                downloadBtn.innerHTML = originalText;
+                downloadBtn.disabled = false;
+            }
+        }
+    </script>
